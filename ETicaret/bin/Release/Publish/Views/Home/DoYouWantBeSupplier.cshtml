@@ -1,0 +1,68 @@
+﻿@model ETicaret.Models.Supplier
+
+@{
+    ViewBag.Title = "Tedarikçi Olmak İster misin?";
+}
+<br />
+<br />
+<br />
+<div class="container">
+    <!-- content begin -->
+    <div class="row my-10">
+        <div class="col-md-12">
+            @using (Html.BeginForm())
+            {
+                <div class="card card-default shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3>
+                                    <span class="fa fa-user-plus fa-2x"></span>
+                                </h3>
+                            </div>
+                            <div class="col-md-9 text-right">
+                                <h2>Tedarikçi Kaydı</h2>
+                                @if (ViewBag.ReError != null && string.IsNullOrEmpty((string)ViewBag.ReError) == false)
+                                {
+                                    <small style="color:red">@ViewBag.ReError</small>
+                                }
+                                else
+                                {
+                                    <small>Lütfen gerekli bilgileri doldurunuz.</small>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control", placeholder = "Şirket Adı", type = "text", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.TaxUnit, new { @class = "form-control", placeholder = "Vergi Dairesi", type = "text", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.TaxNumber, new { @class = "form-control", placeholder = "Vergi Numarası", type = "number", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control", placeholder = "Adres", type = "text", required = "required" })
+                        </div>
+                        
+                    </div>
+                    <div class="card-footer text-muted text-right">
+                        <a href="/Home/Index/" class="btn btn-info float-left">
+                            <span class="fa fa-undo mr-2"></span>Anasayfaya Dön
+                        </a>
+                        <button class="btn btn-success" type="submit">
+                            <span class="fa fa-save mr-2"></span>Kaydet
+                        </button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <!-- content end -->
+</div>
+
+

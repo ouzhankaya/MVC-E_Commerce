@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4c2ef983d0cb4722b4e6458339ea8471" Name="Diagram1">
+        <EntityTypeShape EntityType="ECommerceModel.Adress" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Category" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Comment" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Member" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ECommerceModel.MessageReply" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Message" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ECommerceModel.OrderDetail" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Order" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Product" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="ECommerceModel.Supplier" Width="1.5" PointX="8.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

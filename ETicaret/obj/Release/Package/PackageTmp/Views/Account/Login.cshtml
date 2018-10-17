@@ -1,0 +1,56 @@
+﻿@model Member
+@using ETicaret.Models
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container">
+    <!-- content begin -->
+    <div class="row my-4">
+        <div class="col-md-4 offset-md-4 my-4">
+           @using (Html.BeginForm()) { 
+                <div class="card card-default shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3>
+                                    <span class="fa fa-sign-in fa-2x"></span>
+                                </h3>
+                            </div>
+                            <div class="col-md-9 text-right">
+                                <h2>Giriş</h2>
+                                <small style="color:red">@TempData["Info"]</small> <br />                              
+                                @if (ViewBag.ReError != null && string.IsNullOrEmpty((string)ViewBag.ReError) == false)
+                                {
+                                    <small style="color:red">@ViewBag.ReError</small>
+                                }
+                                else
+                                {
+                                    <small>Lütfen e-posta ve şifrenizi yazınız.</small>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.TextBoxFor(model=>model.Email , new {@class="form-control", placeholder="email", type="email" } )
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Şifre", type = "password" })
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted text-right">
+                        <a href="/Account/ForgotPassword" class="btn btn-warning float-left">
+                            <span class="fa fa-asterisk mr-2"></span>Şifremi Unuttum!
+                        </a>
+                        <button class="btn btn-success" type="submit">
+                            <span class="fa fa-sign-in mr-2"></span>Giriş
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- content end -->
+</div>
+

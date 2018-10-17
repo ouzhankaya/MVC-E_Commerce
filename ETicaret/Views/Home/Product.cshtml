@@ -1,0 +1,11 @@
+﻿@model ETicaret.Models.ViewModel.ProductModel
+@{
+    ViewBag.Title = "Product";
+}
+<div class="container">
+    @Html.Partial("_Product", Model.products)
+    @Html.Partial("_AddCart", Model.products)
+    @Html.Partial("_Comment", new ETicaret.Models.ViewModel.CommentModel() {comment=Model.comments,product=Model.products })
+</div>
+
+

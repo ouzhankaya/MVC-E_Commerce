@@ -1,0 +1,310 @@
+﻿@using ETicaret.Models
+@model IEnumerable<Category>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+
+    <!-- content begin -->
+    <div class="row mt-4">
+        <div class="col-md-12 my-4">
+            <h2>Ürünlerim</h2>
+        </div>
+    </div>
+    <a data-toggle="modal" data-target=".createModal" class="btn btn-success btn-sm" style="color:white">
+        <span class="fa fa-plus"></span>Kategori Ekle
+    </a>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-hover text-center table-sm">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Açıklama</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                         
+                            <td>
+
+                                <span data-target='.editModal' data-item='@Newtonsoft.Json.JsonConvert.SerializeObject(item)' data-toggle='modal' class='editCategory'  style="color:white">
+                                    <a class='btn btn-warning btn-sm'><i class='fa fa-edit'></i>Düzenle</a>
+                                </span>
+                                <span data-target='.removeModal' data-item='@Newtonsoft.Json.JsonConvert.SerializeObject(item)' data-toggle='modal' class='removeCategory'  style="color:white">
+                                    <a class='btn btn-danger btn-sm'><i class='fa fa-trash'></i>Sil</a>
+                                </span>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- content end -->
+
+</div>
+
+<div aria-hidden="true" id="infoModal" aria-labelledby="myLargeModalLabel" class="modal fade removeModal bd-example-modal-lg" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Kategori Silme
+                </h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col col-md-12">
+                        <div class="holder col-md-12">
+                            <label>
+                                Kategori İsmi
+                            </label>
+                            <input class="form-control" type="text" id="removeCategoryName" value="" readonly />
+                        </div>
+                    </div>                    
+                    <div class="form-group col col-md-12">
+                        <div class="holder col-md-12">
+                            <label>
+                                Kategori Açıklaması
+                            </label>
+                            <textarea class="form-control" type="text" id="removeCategoryDesc" value="" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger delete" data-dismiss="modal" type="button">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div aria-hidden="true" id="infoModal" aria-labelledby="myLargeModalLabel" class="modal fade editModal bd-example-modal-lg" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Kategori Silme
+                </h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col col-md-12">
+                        <div class="holder col-md-12">
+                            <label>
+                                Kategori İsmi
+                            </label>
+                            <input class="form-control" type="text" id="editCategoryName" value=""  />
+                        </div>
+                    </div>
+                    <div class="form-group col col-md-12">
+                        <div class="holder col-md-12">
+                            <label>
+                                Kategori Açıklaması
+                            </label>
+                            <textarea class="form-control" type="text" id="editCategoryDesc" value="" ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning edit" data-dismiss="modal" type="button">Düzenle</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div aria-hidden="true" id="infoModal" aria-labelledby="myLargeModalLabel" class="modal fade createModal bd-example-modal-lg" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Kategori Silme
+                </h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col col-md-12">
+                        <div class="holder col-md-12">
+                            <label>
+                                Kategori İsmi
+                            </label>
+                            <input class="form-control" type="text" id="CategoryName" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group col col-md-12">
+                        <div class="holder col-md-12">
+                            <label>
+                                Kategori Açıklaması
+                            </label>
+                            <textarea class="form-control" type="text" id="CategoryDesc" value=""></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success create" data-dismiss="modal" type="button">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", ".removeCategory", function () {
+        var item = $(this).data("item");
+        $(".delete").val(item.ID);
+
+        $("#removeCategoryName").val(item.Name);
+        $("#removeCategoryDesc").val(item.Description);
+    });
+
+    $(document).on("click", ".delete", function (x) {
+        var id = $(this).val();
+        $.ajax({
+            url: "/Category/Delete",
+            method: "POST",
+            data: { id: id },
+            success: function (d) {
+                if (d.state == 1) {
+                    $.notify({
+                        title: '<strong>Başarılı! </strong>',
+                        message: d.Result
+                    },
+                        {
+                            animate: {
+                                enter: 'animated bounceIn',
+                                exit: 'animated bounceOut'
+                            },
+                            type: "success",
+                            z_index: 10000
+                        });
+                    $(".close").trigger("click");
+                    location.reload();
+                }
+                else {
+                    $.notify({
+                        title: '<strong>Hata! </strong>',
+                        message: d.Result
+                    },
+                        {
+                            animate: {
+                                enter: 'animated bounceIn',
+                                exit: 'animated bounceOut'
+                            },
+                            type: "danger",
+                            z_index: 10000
+                        });
+                }
+            }
+        });
+    });
+
+    $(document).on("click", ".editCategory", function () {
+        var item = $(this).data("item");
+        $(".edit").val(item.ID);
+
+        $("#editCategoryName").val(item.Name);
+        $("#editCategoryDesc").val(item.Description);
+    });
+    $(document).on("click", ".edit", function (x) {
+        var id = $(this).val();
+        var obj = {};
+        obj["Name"] = $("#editCategoryName").val();
+        obj["Description"] = $("#editCategoryDesc").val();
+        obj["ID"] = id;
+        $.ajax({
+            url: "/Category/Edit",
+            method: "POST",
+            data: { model: obj },
+            success: function (d) {
+                if (d.state == 1) {
+                    $.notify({
+                        title: '<strong>Başarılı! </strong>',
+                        message: d.Result
+                    },
+                        {
+                            animate: {
+                                enter: 'animated bounceIn',
+                                exit: 'animated bounceOut'
+                            },
+                            type: "success",
+                            z_index: 10000
+                        });
+                    $(".close").trigger("click");
+                    location.reload();
+                }
+                else {
+                    $.notify({
+                        title: '<strong>Hata! </strong>',
+                        message: d.Result
+                    },
+                        {
+                            animate: {
+                                enter: 'animated bounceIn',
+                                exit: 'animated bounceOut'
+                            },
+                            type: "danger",
+                            z_index: 10000
+                        });
+                }
+            }
+        });
+    });
+
+    $(document).on("click", ".create", function (x) {
+        var obj = {};
+        obj["Name"] = $("#CategoryName").val();
+        obj["Description"] = $("#CategoryDesc").val();
+        $.ajax({
+            url: "/Category/Create",
+            method: "POST",
+            data: { model: obj },
+            success: function (d) {
+                if (d.state == 1) {
+                    $.notify({
+                        title: '<strong>Başarılı! </strong>',
+                        message: d.Result
+                    },
+                        {
+                            animate: {
+                                enter: 'animated bounceIn',
+                                exit: 'animated bounceOut'
+                            },
+                            type: "success",
+                            z_index: 10000
+                        });
+                    $(".close").trigger("click");
+                    location.reload();
+                }
+                else {
+                    $.notify({
+                        title: '<strong>Hata! </strong>',
+                        message: d.Result
+                    },
+                        {
+                            animate: {
+                                enter: 'animated bounceIn',
+                                exit: 'animated bounceOut'
+                            },
+                            type: "danger",
+                            z_index: 10000
+                        });
+                }
+            }
+        });
+    });
+</script>

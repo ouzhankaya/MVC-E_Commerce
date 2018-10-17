@@ -1,0 +1,63 @@
+﻿@model  ETicaret.Models.ViewModel.MessageRepliesModel
+@using ETicaret.Models
+@{
+    ViewBag.Title = "Mesaj Cevapları";
+    var id = int.Parse(ViewContext.RouteData.Values["id"].ToString());
+    ECommerceEntities db = new ECommerceEntities();
+    var currentUser = (Member)Session["LogonUser"];
+}
+
+<div class="container">
+    <!-- content begin -->
+    <div class="row mt-4 mb-2">
+        <div class="col-md-12">
+            <h3 class="text-danger">Konu : @db.Messages.Where(x => x.ID == id).Select(x => x.Subject).FirstOrDefault()</h3>
+        </div>
+    </div>
+    <div class="row my-2">
+        @foreach (var item in db.MessageReplies.Where(x=>x.MessageId==id).ToList())
+        {
+            <div class="col-md-12">
+                <div class="card bg-default my-4">
+                    <div class="card-header">
+                        <small class="text-muted">Kimden : @db.Members.Where(x => x.ID == item.MemberFromId).Select(x => x.Name + " " + x.Surname).FirstOrDefault()</small>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            @item.Text
+                        </p>
+                    </div>
+                    <div class="card-footer text-right">
+                        <small class="text-muted">
+                            @item.AddedDate
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+    @using (Html.BeginForm())
+    {
+        <div class="row my-2">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <h4>Cevabınız</h4>
+                    <hr>
+                </div>
+                @Html.Hidden("MessageId", db.MessageReplies.Where(x=>x.ID==id).Select(x=>x.MessageId).FirstOrDefault())
+                <div class="form-group">
+                    @Html.TextArea("Text", new { placeholder = "Mesaj Metni", @class = "form-control" })
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-success">
+                        <span class="fa fa-send mr-2"></span>Cevapla
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+

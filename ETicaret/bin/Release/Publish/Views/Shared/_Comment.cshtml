@@ -1,0 +1,55 @@
+﻿@model  CommentModel
+@using ETicaret.Models.ViewModel
+@using ETicaret.Models
+@{
+    ECommerceEntities db = new ECommerceEntities();
+    string defaultImage = "userProfile.jpg";
+}
+
+<div class="row my-2">
+    <div class="col-md-12">
+        <div class="form-group">
+            <h3>Yorumlar</h3>
+            <hr>
+        </div>
+        <div class="form-group">
+            @foreach (var item in Model.comment.OrderBy(x => x.AddedDate).ToList())
+            {
+                <div class="media my-2">
+                    @*TODO kişi Profiline gidilecek*@
+                    <a href="/Account/Profil/@item.MemberId" class="mr-3">
+                        <img style="width:64px; height:64px" class="rounded-circle img-thumbnail" src="~/images/@(string.IsNullOrEmpty(db.Members.Where(x=>x.ID==item.MemberId).Select(x=>x.ProfileImageName).FirstOrDefault())? defaultImage :db.Members.Where(x=>x.ID==item.MemberId).Select(x=>x.ProfileImageName).FirstOrDefault())" />
+                    </a>
+                    <div class="media-body">
+                        <h5>@($"{db.Members.Where(x => x.ID == item.MemberId).Select(x => x.Name).FirstOrDefault()} {db.Members.Where(x => x.ID == item.MemberId).Select(x => x.Surname).FirstOrDefault()}")</h5>
+                        <p class="text-justify">
+                            @item.Text
+                            <span class="float-right">@item.AddedDate.ToString("dd.MM.yyyy")</span>
+                            <hr />
+                        </p>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+        @if (Session["LogonUser"] != null)
+        {
+            using(Html.BeginForm("Product", "Home", FormMethod.Post))
+            {
+                @Html.Hidden("ProductId", Model.product.ID)
+                <div class="form-group">
+                    <small style="color:red">@ViewBag.MyError</small>
+                    <textarea cols="300" rows="3" id="Text" name="Text" class="form-control" placeholder="Yorum Giriniz" maxlength="500"></textarea>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-success">
+                        <span class="fa fa-send mr-2"></span> Gönder
+                    </button>
+                </div>
+            }
+
+        }
+
+    </div>
+</div>

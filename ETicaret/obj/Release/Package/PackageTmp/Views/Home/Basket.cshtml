@@ -1,0 +1,178 @@
+﻿@using ETicaret.Models.ViewModel
+@using ETicaret.Models
+@model List<BasketModel>
+@{
+    ViewBag.Title = "Basket";
+    ECommerceEntities db = new ECommerceEntities();
+}
+
+<div class="container">
+    <!-- content begin -->
+    <div class="row mt-4">
+        <div class="col-md-12 my-4">
+            <h2>Sepetim</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <small style="color:red ">@TempData["MyError"]</small>
+            @using (Html.BeginForm("Buy", "Home"))
+            {
+            <table class="table table-striped table-hover text-center table-sm">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Birim Fiyatı</th>
+                        <th>Adedi</th>
+                        <th>Ara Toplam</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (BasketModel item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Products.Name
+                            </td>
+                            <td>
+                                @item.Products.Price ₺
+                            </td>
+                            <td>
+                                @item.Count
+                            </td>
+                            <td>
+                                @db.Products.Where(x => x.ID == item.Products.ID).Select(x => x.Price * item.Count).FirstOrDefault() ₺
+                            </td>
+                            <td>
+                                <a href="/Home/AddBasket/@item.Products.ID" class="btn btn-warning btn-sm">
+                                    <span class="fa fa-plus"></span>
+                                </a>
+                                <a href="/Home/AddBasket/@item.Products.ID?remove=true  " class="btn btn-info btn-sm mr-4">
+                                    <span class="fa fa-minus"></span>
+                                </a>
+                                <a class="btn btn-info btn-sm" href="/Home/Product/@item.Products.ID" target="_blank">
+                                    <span class="fa fa-eye"></span>
+                                </a>
+                                <a href="/Home/RemoveBasket/@item.Products.ID" class="btn btn-danger btn-sm">
+                                    <span class="fa fa-trash"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center text-danger">
+                            <h2>@ViewBag.TotalCount</h2>
+                        </td>
+                        <td class="text-center text-danger">
+                            <h2>@ViewBag.TotalPrice ₺</h2>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+                @if (ViewBag.Addresses != null && ((List<SelectListItem>)ViewBag.Addresses) != null)
+                {
+                    <tr>
+                        <td colspan="2">Adres Seçiniz</td>
+                        <td colspan="4">
+                            @Html.DropDownList("Address", (List<SelectListItem>)ViewBag.Addresses, new { @class = "form-control", style="margin-right:-50px" })
+                        </td>
+                    </tr>
+                }
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="text-right">
+                            <a href="/Home/RemoveBasket/0" class="btn btn-danger mr-4">
+                                <span class="fa fa-trash mr-2"></span>Sepeti Boşalt
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <span class="fa fa-send mr-2"></span>Satın Al
+                            </button>
+                        </td>
+                    </tr>
+
+            </table>
+            }
+
+        </div>
+    </div>
+    <!-- content end -->
+</div>
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteModalTitle">Ürün Çıkar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 md-offset-1">
+                        <center>
+                            <span class="fa fa-trash text-danger fa-3x mr-2"></span>
+                        </center>
+                    </div>
+                    <div class="col-md-7 text-center">
+                        <p>Ürünü sepetinizden çıkarmak istediğinize emin misiniz?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-check mr-2"></span>Hayır
+                </button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">
+                    <span class="fa fa-close mr-2"></span>Evet
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Clear -->
+<div class="modal fade" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteModalTitle">Sepeti Boşalt</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 md-offset-1">
+                        <center>
+                            <span class="fa fa-trash text-danger fa-3x mr-2"></span>
+                        </center>
+                    </div>
+                    <div class="col-md-7 text-center">
+                        <p>Sepetinizi boşaltmak istediğinize emin misiniz?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="fa fa-check mr-2"></span>Hayır
+                </button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">
+                    <span class="fa fa-close mr-2"></span>Evet
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
